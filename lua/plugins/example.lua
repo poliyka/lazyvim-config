@@ -38,6 +38,14 @@ return {
     opts = { use_diagnostic_signs = true },
   },
 
+  -- auto warpping
+  {
+    "andrewferrier/wrapping.nvim",
+    config = function()
+        require("wrapping").setup()
+    end
+  },
+
   -- disable trouble
   { "folke/trouble.nvim", enabled = false },
 

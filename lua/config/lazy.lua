@@ -47,3 +47,12 @@ require("lazy").setup({
     },
   },
 })
+
+-- color theme
+vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#3c8dff" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#3c8dff" })
+vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#3c8dff" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#ff8c00" })
+vim.api.nvim_set_hl(0, "CursorLine", {})
+vim.api.nvim_set_hl(0, "Visual", { fg = "white", bg = "#ff7b00" })
+vim.api.nvim_set_hl(0, "Comment", { fg = "#2c79ff" })
