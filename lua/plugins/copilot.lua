@@ -7,6 +7,8 @@ return {
       suggestion = { enabled = true },
       panel = { enabled = true },
       filetypes = {
+	yml = true,
+	yaml = true,
         markdown = true,
         help = true,
       },
