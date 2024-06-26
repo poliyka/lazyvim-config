@@ -2,9 +2,14 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+-- Some OS detectors
+local is_wsl = vim.fn.has("wsl") == 1
+
+local opt = vim.opt
+
 -- Indent blankline
-vim.opt.list = true
-vim.opt.listchars = { tab = "▸ ", trail = "·", nbsp = "␣", eol = "↴" }
+opt.list = true
+opt.listchars = { tab = "▸ ", trail = "·", nbsp = "␣", eol = "↴" }
 
 -- which-key
 vim.o.timeout = true
@@ -27,3 +32,21 @@ local handlers = lsp.handlers
 local pop_opts = { border = "rounded", max_width = 80 }
 handlers["textDocument/hover"] = lsp.with(handlers.hover, pop_opts)
 handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, pop_opts)
+
+-- clipboard with win32yank.exe
+-- https://github.com/equalsraf/win32yank/releases
+-- chmod +x and copy in win32yank into /usr/bin/win32yank.exe
+if is_wsl then
+  vim.g.clipboard = {
+    name = "win32yank-wsl",
+    copy = {
+      ["+"] = "win32yank.exe -i --crlf",
+      ["*"] = "win32yank.exe -i --crlf",
+    },
+    paste = {
+      ["+"] = "win32yank.exe -o --lf",
+      ["*"] = "win32yank.exe -o --lf",
+    },
+    cache_enabled = 0,
+  }
+end

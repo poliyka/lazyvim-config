@@ -135,6 +135,18 @@ return {
         "vim",
         "yaml",
       },
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_dotfiles = false,
+          hide_by_name = {
+            "node_modules",
+            ".github",
+            "package-lock.json",
+          },
+          never_show = { ".git" },
+        },
+      },
     },
   },
 
