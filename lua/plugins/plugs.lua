@@ -2,6 +2,10 @@ return {
   {
     "tpope/vim-surround",
   },
+  -- Auto Pairs
+  {
+    "windwp/nvim-autopairs",
+  },
   { "onsails/lspkind-nvim" },
   {
     -- "bkad/CamelCaseMotion",
@@ -9,6 +13,10 @@ return {
     -- vim.keymap.set("", "b", "<Plug>CamelCaseMotion_b", { silent = true }),
     -- vim.keymap.set("", "e", "<Plug>CamelCaseMotion_e", { silent = true }),
     -- vim.keymap.set("", "ge", "<Plug>CamelCaseMotion_ge", { silent = true }),
+  },
+  -- EasyMotion
+  {
+    "easymotion/vim-easymotion",
   },
   {
     "smoka7/multicursors.nvim",
@@ -78,6 +86,27 @@ return {
       local cmp = require("cmp")
       local lspkind = require("lspkind")
 
+      lspkind.init({
+        symbol_map = {
+          Copilot = "",
+        },
+      })
+
+      vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+
+      opts.completion = {
+        autocomplete = false,
+      }
+
+      opts.sources = {
+        -- Copilot Source
+        { name = "copilot", group_index = 2 },
+        -- Other Sources
+        { name = "nvim_lsp", group_index = 2 },
+        { name = "path", group_index = 2 },
+        { name = "luasnip", group_index = 2 },
+      }
+
       opts.window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
@@ -96,6 +125,22 @@ return {
       }
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
+        ["<C-i>"] = cmp.mapping(function(fallback)
+          if not cmp.visible() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<C-Space"] = cmp.mapping(function(fallback)
+          cmp.complete({
+            config = {
+              sources = {
+                { name = "copilot" },
+              },
+            },
+          })
+        end, { "i", "s" }),
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
